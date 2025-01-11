@@ -1,1 +1,1 @@
-Esse é um desafio técnico de  extração, transformação e análise de dados utilizando Python e pandas, utilizando a PokeAPI como fonte de dados.
+Esse é um desafio técnico de extração, transformação e análise de dados com Python e pandas, utilizando a PokeAPI como fonte de dados.
