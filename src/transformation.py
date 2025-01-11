@@ -1,6 +1,25 @@
 import matplotlib.pyplot as plt
 from extraction import extract_pokemon_data
 
+def get_types_count(pokemon_df):
+    """Retorna a contagem de Pokémon por tipo."""
+    pokemon_df_exploded = pokemon_df.explode('Tipos')
+    return pokemon_df_exploded['Tipos'].value_counts().reset_index()
+
+def get_stats_by_type(pokemon_df):
+    """Calcula a média de ataque, defesa e HP por tipo."""
+    pokemon_df_exploded = pokemon_df.explode('Tipos')
+    return pokemon_df_exploded.groupby('Tipos').agg({
+        'Ataque': 'mean',
+        'Defesa': 'mean',
+        'HP': 'mean'
+    }).reset_index()
+
+def get_top_5_experience(pokemon_df):
+    """Retorna os 5 Pokémon com maior experiência base."""
+    return pokemon_df.nlargest(5, 'Experiência Base')[['Nome', 'Experiência Base']]
+
+
 def transform_data(pokemon_df):
     """Transforma os dados dos Pokémon e gera as categorias, gráficos e análises estatísticas."""
 
@@ -19,7 +38,7 @@ def transform_data(pokemon_df):
     pokemon_df_exploded = pokemon_df.explode('Tipos')
 
     # Transformação de Tipos - Contagem de Pokémon por tipo
-    types_count = pokemon_df_exploded['Tipos'].value_counts().reset_index()
+    types_count = get_types_count(pokemon_df)
     types_count.columns = ['Tipo', 'Contagem']
     
     # Gerando gráfico de barras para a distribuição de Pokémon por tipo com matplotlib
@@ -33,17 +52,13 @@ def transform_data(pokemon_df):
     plt.show()
 
     # Análise estatística - média de ataque, defesa e HP por tipo de Pokémon
-    stats_by_type = pokemon_df_exploded.groupby('Tipos').agg({
-        'Ataque': 'mean',
-        'Defesa': 'mean',
-        'HP': 'mean'
-    }).reset_index()
+    stats_by_type = get_stats_by_type(pokemon_df)
 
     print("Média de Ataque, Defesa e HP por Tipo de Pokémon:")
     print(stats_by_type)
 
     # Os 5 Pokémon com maior Experiência Base
-    top_5_experience = pokemon_df.nlargest(5, 'Experiência Base')
+    top_5_experience = get_top_5_experience(pokemon_df)
     print("\nTop 5 Pokémon com Maior Experiência Base:")
     print(top_5_experience[['Nome', 'Experiência Base']])
 
