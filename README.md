@@ -1,1 +1,1 @@
-"# poke-data-analysis" 
+Esse é um desafio técnico de  extração, transformação e análise de dados utilizando Python e pandas, utilizando a PokeAPI como fonte de dados.
