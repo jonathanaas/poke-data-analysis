@@ -1,7 +1,5 @@
-import pandas as pd
+import logging
 import matplotlib.pyplot as plt
-from transformation import transform_data
-from extraction import extract_pokemon_data
 from utils import type_colors
 
 def save_dataframe_to_csv(df, filename):
@@ -10,9 +8,9 @@ def save_dataframe_to_csv(df, filename):
         # Diretório fixo para salvar os relatórios
         file_path = f"reports/{filename}"
         df.to_csv(file_path, index=False, encoding='utf-8')
-        print(f"Arquivo salvo com sucesso: {file_path}")
+        logging.info(f"Arquivo CSV salvo com sucesso: {file_path}")
     except Exception as e:
-        print(f"Erro ao salvar arquivo CSV: {e}")
+        logging.error(f"Erro ao salvar arquivo CSV: {e}")
 
 def save_plot_as_png(plot_function, filename):
     """Salva um gráfico gerado como uma imagem PNG."""
@@ -22,9 +20,9 @@ def save_plot_as_png(plot_function, filename):
         plot_function()
         plt.savefig(file_path, format="png", bbox_inches="tight")
         plt.close()
-        print(f"Gráfico salvo com sucesso: {file_path}")
+        logging.info(f"Grafico salvo com sucesso: {file_path}")
     except Exception as e:
-        print(f"Erro ao salvar gráfico PNG: {e}")
+        logging.error(f"Erro ao salvar grafico PNG: {e}")
 
 def plot_types_distribution(types_count):
     """Gera o gráfico de distribuição de Pokémons por tipo."""
@@ -45,17 +43,10 @@ def plot_types_distribution(types_count):
 
     plt.tight_layout()
 
-def generate_report():
+def generate_report(pokemon_df, types_count, stats_by_type):
     """Gera o relatório consolidado e exporta os resultados."""
-    print("Iniciando extração e transformação dos dados...")
-    pokemon_df = extract_pokemon_data()
 
-    if pokemon_df.empty:
-        print("Nenhum dado foi extraído. O relatório não será gerado.")
-        return
-
-    # Transformando os dados
-    pokemon_df, types_count, stats_by_type = transform_data(pokemon_df)
+    # Arredondando os dados para melhor exibição
     stats_by_type_rounded = stats_by_type.round(2)
 
     # Exportando as tabelas
@@ -64,6 +55,3 @@ def generate_report():
 
     # Exportando o gráfico
     save_plot_as_png(lambda: plot_types_distribution(types_count), "types_distribution.png")
-
-if __name__ == "__main__":
-    generate_report()

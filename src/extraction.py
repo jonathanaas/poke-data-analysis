@@ -9,13 +9,15 @@ def fetch_pokemon_list(limit=100, offset=0):
     """Busca a lista de Pokémons da PokeAPI com base no limite e offset."""
 
     endpoint = f"{BASE_URL}/pokemon?limit={limit}&offset={offset}"
+    logging.info(f"Requisitando lista de Pokemons com limite {limit} e offset {offset}")
     
     try:
         response = requests.get(endpoint)
         response.raise_for_status()
+        logging.info(f"Requisicao para {endpoint} bem-sucedida.")
         return response.json()["results"]
     except Exception as e:
-        logging.error(f"Erro durante a requisição: {e}")
+        logging.error(f"Erro durante a requisicao: {e}")
         return []  # Retorna uma lista vazia em caso de erro
 
 
@@ -26,20 +28,17 @@ def fetch_pokemon_details(pokemon_url):
         response.raise_for_status()  # Levanta um erro se a resposta não for 200
         return response.json()
     except requests.exceptions.RequestException as e:
-        logging.error(f"Erro ao acessar detalhes de Pokémon: {e}")
+        logging.error(f"Erro ao acessar detalhes de Pokemon: {e}")
         return None
 
 def extract_pokemon_data():
     """
     Extrai os dados dos Pokémons da PokeAPI e retorna um DataFrame com as colunas especificadas.
     """
-    pokemon_data = []
-    logging.info("Iniciando a extração dos dados dos Pokémons...")
-    
+    pokemon_data = []   
     pokemon_list = fetch_pokemon_list()
 
     if not pokemon_list:
-        logging.error("Nenhum Pokémon encontrado.")
         return pd.DataFrame()  # Retorna um DataFrame vazio se não houver Pokémon
     
     for pokemon in pokemon_list:
@@ -56,21 +55,11 @@ def extract_pokemon_data():
                 "Defesa": next((stat["base_stat"] for stat in details["stats"] if stat["stat"]["name"] == "defense"), 0),
             })
         else:
-            logging.warning(f"Detalhes do Pokémon {pokemon['name']} não encontrados.")
+            logging.warning(f"Detalhes do Pokemon {pokemon['name']} nao encontrados.")
 
     if pokemon_data:
         pokemon_df = pd.DataFrame(pokemon_data)
-        logging.info(f"Extração concluída com sucesso! {len(pokemon_df)} Pokémon encontrados.")
         return pokemon_df
     else:
-        logging.error("Nenhum dado de Pokémon extraído.")
         return pd.DataFrame()
-    
-
-if __name__ == "__main__":
-    df = extract_pokemon_data()
-    if not df.empty:
-        print(df.head())  # Exibe as primeiras linhas do DataFrame se os dados foram extraídos com sucesso
-    else:
-        print("Nenhum dado foi extraído.")
 
