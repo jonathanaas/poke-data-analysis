@@ -47,9 +47,29 @@ Após a instalação das dependências, você pode executar o pipeline localment
 ```bash
 python src/pipeline.py
 ```
-#### 2.1. Saídas geradas
-Os arquivos gerados pelo pipeline serão salvos na pasta `reports/`.
-#### Exemplos:
+
+### 3. Executando o pipeline com Docker
+Se preferir rodar o projeto dentro de um contêiner Docker, siga as instruções abaixo.  
+#### 3.1. Construindo a imagem Docker  
+Com o Docker instalado, você pode construir a imagem Docker do projeto com o seguinte comando (certifique-se de estar na raiz do projeto, onde o `Dockerfile` está localizado):
+```bash
+docker build -t pokemon-pipeline .
+```
+#### 3.2. Executando o contêiner Docker
+```bash
+docker run pokemon-pipeline
+```
+
+## Saídas geradas
+Os relatórios gerados estarão disponíveis na pasta `reports` no diretório local onde o comando foi executado:
+```plaintext
+reports/
+├── stats_by_type.csv         # Estatísticas por tipo de Pokémon
+├── top_5_experience.csv      # Top 5 Pokémon com maior experiência base
+└── types_distribution.png    # Gráfico de distribuição de Pokémon por tipo
+```
+
+### Exemplos:
 1. **Relatório de Estatísticas por Tipo** (`stats_by_type.csv`):
    | Tipo    | Ataque Médio | Defesa Média | HP Médio |
    |---------|--------------|--------------|----------|
@@ -70,26 +90,6 @@ Os arquivos gerados pelo pipeline serão salvos na pasta `reports/`.
    O gráfico de barras é gerado utilizando cores personalizadas para cada tipo de Pokémon (ex.: `Water` = azul, `Fire` = vermelho, etc.), tornando as visualizações mais claras e informativas.
    
    ![Gráfico de Distribuição](reports/types_distribution.png)
-
-### 3. Executando o pipeline com Docker
-Se preferir rodar o projeto dentro de um contêiner Docker, siga as instruções abaixo.  
-#### 3.1. Construindo a imagem Docker  
-Com o Docker instalado, você pode construir a imagem Docker do projeto com o seguinte comando (certifique-se de estar na raiz do projeto, onde o `Dockerfile` está localizado):
-```bash
-docker build -t pokemon-pipeline .
-```
-#### 3.2. Executando o contêiner Docker
-```bash
-docker run pokemon-pipeline
-```
-#### 3.3. Acessando os relatórios
-Os relatórios gerados estarão disponíveis na pasta `reports` no diretório local onde o comando foi executado:
-```plaintext
-reports/
-├── stats_by_type.csv         # Estatísticas por tipo de Pokémon
-├── top_5_experience.csv      # Top 5 Pokémon com maior experiência base
-└── types_distribution.png    # Gráfico de distribuição de Pokémon por tipo
-```
 
 ## Gerenciamento de Logs
 ### 1. Localmente
