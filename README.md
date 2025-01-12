@@ -50,7 +50,10 @@ python src/pipeline.py
 ```
 
 ### 3. Executando o pipeline com Docker
-Se preferir rodar o projeto dentro de um contêiner Docker, siga as instruções abaixo.  
+Se preferir rodar o projeto dentro de um contêiner Docker, siga as instruções abaixo. Mas antes certifique-se de ter o dock instalado no seu ambiente com:
+```bash
+docker --version
+```
 #### 3.1. Construindo a imagem Docker  
 Com o Docker instalado, você pode construir a imagem Docker do projeto com o seguinte comando (certifique-se de estar na raiz do projeto, onde o `Dockerfile` está localizado):
 ```bash
