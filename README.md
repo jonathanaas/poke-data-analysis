@@ -41,6 +41,7 @@ Para instalar as dependências localmente, siga os seguintes passos:
      ```bash
      pip install -r requirements.txt
      ```
+  3. Ao executar o pipeline com Docker (mostrado mais abaixo), as dependências serão instaladas no processo.
 
 ### 2. Executando o pipeline localmente
 Após a instalação das dependências, você pode executar o pipeline localmente. O comando a seguir irá executar o script `pipeline.py`, que realiza a extração dos dados, transformação e geração do relatório:
