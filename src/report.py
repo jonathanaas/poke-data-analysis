@@ -56,10 +56,11 @@ def generate_report():
 
     # Transformando os dados
     pokemon_df, types_count, stats_by_type = transform_data(pokemon_df)
+    stats_by_type_rounded = stats_by_type.round(2)
 
     # Exportando as tabelas
     save_dataframe_to_csv(pokemon_df.nlargest(5, 'Experiência Base')[['Nome', 'Experiência Base']], "top_5_experience.csv")
-    save_dataframe_to_csv(stats_by_type, "stats_by_type.csv")
+    save_dataframe_to_csv(stats_by_type_rounded, "stats_by_type.csv")
 
     # Exportando o gráfico
     save_plot_as_png(lambda: plot_types_distribution(types_count), "types_distribution.png")
