@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from extraction import extract_pokemon_data
+from utils import type_colors
 
 def get_types_count(pokemon_df):
     """Retorna a contagem de Pokémon por tipo."""
@@ -42,12 +43,21 @@ def transform_data(pokemon_df):
     types_count.columns = ['Tipo', 'Contagem']
     
     # Gerando gráfico de barras para a distribuição de Pokémon por tipo com matplotlib
-    plt.figure(figsize=(10, 6))
-    plt.bar(types_count['Tipo'], types_count['Contagem'], color=plt.cm.viridis(range(len(types_count))))
-    plt.title("Distribuição de Pokémon por Tipo")
-    plt.xlabel("Tipo")
-    plt.ylabel("Quantidade de Pokémon")
-    plt.xticks(rotation=45, ha="right")
+    plt.figure(figsize=(12, 8))
+
+    # Atribuindo a cor a cada barra com base no tipo do Pokémon
+    bar_colors = [type_colors.get(tipo, 'gray') for tipo in types_count['Tipo']] # Usando 'gray' como padrão
+
+    plt.bar(types_count['Tipo'], types_count['Contagem'], color=bar_colors)
+    plt.title("Distribuição de Pokémons por Tipo")
+    plt.xlabel("Tipo de Pokémon", fontsize=12)
+    plt.ylabel("Quantidade de Pokémon", fontsize=12)
+    plt.xticks(rotation=45, ha="right", fontsize=10)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    
+    for i, count in enumerate(types_count['Contagem']):
+        plt.text(i, count + 1, str(count), ha='center', fontsize=10)
+
     plt.tight_layout()
     plt.show()
 

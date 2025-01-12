@@ -1,0 +1,20 @@
+type_colors = {
+    'Water': 'blue',
+    'Fire': 'red',
+    'Grass': 'green',
+    'Electric': 'yellow',
+    'Bug': 'olive',
+    'Normal': 'grey',
+    'Psychic': 'violet',
+    'Dragon': 'cyan',
+    'Fairy': 'pink',
+    'Ghost': 'indigo',
+    'Dark': 'black',
+    'Fighting': 'orange',
+    'Rock': 'saddlebrown',
+    'Poison': 'purple',
+    'Steel': 'silver',
+    'Ice': 'lightblue',
+    'Flying': 'lightgray',
+    'Ground': 'tan'
+}
