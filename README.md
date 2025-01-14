@@ -60,8 +60,9 @@ Com o Docker instalado, você pode construir a imagem Docker do projeto com o se
 docker build -t pokemon-pipeline .
 ```
 #### 3.2. Executando o contêiner Docker
+Execute o contêiner com o mapeamento do diretório `reports/` para o host, garantindo acesso fácil aos relatórios gerados:
 ```bash
-docker run pokemon-pipeline
+docker run -v "$(pwd)/reports:/app/reports" pokemon-pipeline
 ```
 
 ## Saídas geradas
