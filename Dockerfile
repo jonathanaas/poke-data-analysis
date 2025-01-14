@@ -5,10 +5,10 @@ FROM python:3.13.1-slim
 WORKDIR /app
 
 # Copiando o conteúdo do diretório local para o diretório de trabalho no contêiner
-COPY . .
+COPY . /app
 
 # Instalando as dependências do projeto
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Comando para rodar o pipeline ao iniciar o contêiner
-CMD ["python", "pipeline.py"]
+CMD ["python", "src/pipeline.py"]
